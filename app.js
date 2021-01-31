@@ -13,8 +13,4 @@ app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/game.html'));
 });
 
-button_test_1.onclick = function () {
-  alert("Well Done");
-}
-
 app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));//-app;+server
