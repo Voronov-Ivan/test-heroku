@@ -20,7 +20,7 @@ app.get('/game', function(req, res) {
 });
 
 //
-users = [];
+words = [];
 connected = [];
 io.on('connection', function (socket) {
   socket.emit('news','You connect');
@@ -32,6 +32,13 @@ io.on('connection', function (socket) {
     connected.splice(connected.indexOf(socket),1);
     console.log("disconnect");
   })
+
+  socket.on('chat message', (msg) => {
+    words.push(msg);
+    console.log(words);
+    socket.emit('otvet','you say:'+msg)
+  });
+
 });
 //
 
