@@ -20,11 +20,18 @@ app.get('/game', function(req, res) {
 });
 
 //
+users = [];
+connected = [];
 io.on('connection', function (socket) {
   socket.emit('news','You connect');
   socket.on('my other event', function (data) {
     console.log(data);
+    connected.push(socket);
   });
+  socket.on('disconnect',function () {
+    connected.splice(connected.indexOf(socket),1);
+    console.log("disconnect");
+  })
 });
 //
 
