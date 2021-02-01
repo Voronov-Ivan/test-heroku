@@ -5,6 +5,7 @@
   <title>Game</title>
   <meta name="Keywords" content="voronov-ivan-test0101">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
  </head>
  <body>
    <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -22,14 +23,13 @@
   <form id="form_1" action="">
         <input id="input_1" autocomplete="off" /><button>Send</button>
   </form>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
   <script type="text/javascript">
     var socket = io();
-    // socket.on('news', function (data) {
-    // console.log(data);
-    // socket.emit('my other event', socket+' hes been connected');
-    // });
-    ////////
+    socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', socket+' hes been connected');
+    });
+    //////
     var form = document.getElementById('form_1');
     var input = document.getElementById('input_1');
     form_1.addEventListener('submit', function(e) {
