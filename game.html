@@ -23,7 +23,7 @@
 
   <input value="Нажми меня" id="button_test_1" onclick="" type="button">
   <script type="text/javascript">
-    var socket = io.connect('http://localhost:3000' || 'https://test-heroku-gith.herokuapp.com');
+    var socket = io();
     socket.on('news', function (data) {
     console.log(data);
     socket.emit('my other event', socket+' hes been connected');
