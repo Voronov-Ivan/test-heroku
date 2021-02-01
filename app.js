@@ -5,8 +5,7 @@ const port = process.env.PORT || 3000;
 
 //
 const server = require('http').Server(app); //
-const io = require('socket.io')(server);
-server.listen(port, () => console.log(`url-shortener listening on port ${port}!`));
+app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));
 //
 
 app.get('/', function(req, res) {
@@ -18,28 +17,3 @@ app.get('/about', function(req, res) {
 app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/game.html'));
 });
-
-//
-words = [];
-connected = [];
-io.on('connection', function (socket) {
-  socket.emit('news','You connect');
-  socket.on('my other event', function (data) {
-    console.log(data);
-    connected.push(socket);
-  });
-  socket.on('disconnect',function () {
-    connected.splice(connected.indexOf(socket),1);
-    console.log("disconnect");
-  })
-
-  socket.on('chat message', (msg) => {
-    words.push(msg);
-    console.log(words);
-    socket.emit('otvet','you say:'+msg)
-  });
-
-});
-//
-
-//app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));//-app;+server
