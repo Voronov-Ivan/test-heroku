@@ -19,15 +19,30 @@
   <h1>Welcome to game</h1><br>
   <p>Click button to start</p>
   <p>Voronov</p>
-
-  <input value="Нажми меня" id="button_test_1" onclick="" type="button">
+  <form id="form_1" action="">
+        <input id="input_1" autocomplete="off" /><button>Send</button>
+  </form>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
   <script type="text/javascript">
     var socket = io();
-    socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', socket+' hes been connected');
+    // socket.on('news', function (data) {
+    // console.log(data);
+    // socket.emit('my other event', socket+' hes been connected');
+    // });
+    ////////
+    var form = document.getElementById('form_1');
+    var input = document.getElementById('input_1');
+    form_1.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (input_1.value) {
+        socket.emit('chat message', input_1.value);
+        input.value = '';
+      }
     });
+    //////
+    socket.on('otvet',function (com) {
+      console.log(com);
+    })
   </script>
  </body>
 </html>
