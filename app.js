@@ -3,6 +3,11 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 3000;
 
+//
+const server = require('http').Server(app); //
+const io = require('socket.io')(server);
+server.listen(port, () => console.log(`url-shortener listening on port ${port}!`));
+//
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/home.html'));
@@ -14,4 +19,13 @@ app.get('/game', function(req, res) {
     res.sendFile(path.join(__dirname + '/game.html'));
 });
 
-app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));//-app;+server
+//
+io.on('connection', function (socket) {
+  socket.emit('news','You connect');
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+//
+
+//app.listen(port, () => console.log(`url-shortener listening on port ${port}!`));//-app;+server
