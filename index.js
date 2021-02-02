@@ -4,16 +4,18 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 
+app.set('view egine', 'ejs');
+
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 // app.get("/start_game", urlencodedParser, function (request, response) {
-//     response.sendFile(__dirname + "/start_game.html");
+//     response.render('start_game', {'players': 1});
 // });
 a = 0;
 app.post("/start_game", urlencodedParser, function (request, response) {
     if(!request.body) return response.sendStatus(400);
-    console.log(request.body);
-    response.sendFile(__dirname + "/start_game.html")
     console.log("You connect");
+    a++;
+    response.render('start_game.ejs', {'players': a});
 });
 //
 const server = require('http').Server(app); //
