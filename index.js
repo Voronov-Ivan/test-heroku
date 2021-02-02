@@ -1,45 +1,47 @@
-const express = require('express');
-const app = express();
+var express = require('express');
+var app = express();
+app.set('port', (process.env.PORT || 5000));
+
 const path = require('path');
 const bodyParser = require("body-parser");
-//
-const socketIO = require('socket.io');
-const PORT = process.env.PORT || 3000;
-const INDEX = '/index.html';
-app.set('view egine', 'ejs');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
-// app.get("/start_game", urlencodedParser, function (request, response) {
-//     response.render('start_game', {'players': 1});
-// });
-var a = 0;
+
+var server = app.listen(app.get('port'), function() {
+    console.log('Node app is running on port', app.get('port'));
+});
+
+var io = require('socket.io')(server);
+
+app.use(express.static("./views"));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+app.get('/', function (req, res) {
+    var path = __dirname + '/game.html';
+    console.log(path);
+    res.sendFile(path);
+});
 app.post("/start_game", urlencodedParser, function (request, response) {
     if(!request.body) return response.sendStatus(400);
-    console.log("You connect");
-    a++;
-    response.render('start_game.ejs', {'players': a});
+    response.render('start_game.ejs', {'players_num': ''});
 });
 
-const server = require('http').Server(app); //
-// app.listen(PORT, () => console.log(`url-shortener listening on port ${PORT}!`));
-//
+io.on('connection', function(socket) {
+    socket.on('beep', function(){
+        socket.emit("beep", {data: 5});
+        console.log('beep recieved');
+    });
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-app.get('/about', function(req, res) {
-    res.sendFile(path.join(__dirname + '/about.html'));
-});
-app.get('/game', function(req, res) {
-    res.sendFile(path.join(__dirname + '/game.html'));
-});
-//
-const server_ = express()
-  app.use((req, res) => console.log("Complete"));
-  app.listen(PORT, () => console.log(`url-shortener listening on port ${PORT}!`));
-const io = socketIO(server);
+    socket.on('change-speed', function(data) {
+        console.log('change speed recieved: ' + data);
+        socket.emit("speed", {newSpeed: data});
+    });
 
-io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
+    socket.on('ios-connection', function(data) {
+        console.log('ios connection with message: ' + data);
+    });
 });
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
