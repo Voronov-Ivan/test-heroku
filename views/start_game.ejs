@@ -6,6 +6,25 @@
     <title>Let`s play</title>
 </head>
 <body>
-    <p>Pleyers - <%= players %></p>
+    <p>Players - <%= players_num%></p><br>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+    <script>
+      var socket = io.connect('/');
+      socket.on('speed', function (data) {
+        console.log('speed Message Received!');
+        console.log(data);
+      });
+
+      socket.on('beep', function (data) {
+        console.log('beep Message Received!');
+        console.log(data);
+      });
+      socket.emit("beep", {beep : true});
+      socket.emit("change-speed", {"change-speed" : true});
+      socket.emit("ios-connection", {"ios-connection" : true});
+
+
+    </script>
 </body>
 </html>
