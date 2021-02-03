@@ -6,14 +6,22 @@
     <title>Let`s play</title>
 </head>
 <body>
+  <form id="enter_nick">
+    <input type="text" id="nickname" placeholder="enter your nickname">
+    <button type="submit" id="enter_submit" name="button">submit</button>
+  </form>
     <p>Players - <span id="msg"></span></p><br>
+    <p>Nickname - <span id="nick"></span></p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
     <script>
+    $(function () {
       var socket = io.connect('/');
+
       socket.on('players_in_room',function (msg) {
         // console.log(msg);
         $('#msg').text(msg);
+      });
       });
     </script>
 </body>
