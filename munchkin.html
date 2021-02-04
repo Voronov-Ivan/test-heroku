@@ -98,9 +98,9 @@
       socket.on('players_in_room',function (players) {
         $('#players').text(players);
       });
-      // socket.on('set_nick', function (nick) {
-      //   $('#player_name').text(nick);
-      // });
+      socket.on('set_nick', function (nick) {
+        $('#player_name').text(nick);
+      });
       // });
       // function SetName() {
       //   socket.emit('send_name',$('#name').val())

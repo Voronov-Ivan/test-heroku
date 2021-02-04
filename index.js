@@ -67,6 +67,7 @@ io.on('connection', function(socket) {
     });
     function Nick(nick,id) {
       play.pushNick(nick,id);
+      io.emit('set_nick',nick);
       play.printPlayer();
     }
     app.post("/munchkin_nick", urlencodedParser, function (req, res) {

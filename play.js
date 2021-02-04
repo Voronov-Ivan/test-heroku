@@ -29,7 +29,6 @@ module.exports = {
           item.name = nick;
         }
       });
-      console.log(nick);
     },
     printPlayer: function () {
       players.forEach((item, i) => {
