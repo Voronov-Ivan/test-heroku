@@ -89,15 +89,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
     <script>
+    // $("button").click(function( event ) {
+    //   event.preventDefault();
+    // });
     // $(function () {
       var socket = io.connect('/');
 
       socket.on('players_in_room',function (players) {
         $('#players').text(players);
       });
-      socket.on('set_nick', function (nick) {
-        $('#player_name').text(nick);
-      });
+      // socket.on('set_nick', function (nick) {
+      //   $('#player_name').text(nick);
+      // });
       // });
       // function SetName() {
       //   socket.emit('send_name',$('#name').val())

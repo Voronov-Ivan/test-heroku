@@ -16,14 +16,24 @@ module.exports = {
     printDoor: function () {
       console.log(door);
     },
-    pushNick: function (nick) {
-      players.push(nick);
+    pushPlayer: function (id) {
+      players.push(id)
+    },
+    pushPlayer: function (id) {
+      players.push(id);
+      console.log(players.length);
+    },
+    pushNick: function (nick,id) {
+      players.forEach((item, i) => {
+        if (id == item.id) {
+          item.name = nick;
+        }
+      });
+      console.log(nick);
     },
     printPlayer: function () {
       players.forEach((item, i) => {
         console.log(item);
-      });
-
-    }
-
+      })
+    },
   }
