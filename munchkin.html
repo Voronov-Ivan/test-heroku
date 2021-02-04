@@ -9,13 +9,13 @@
     body {
     overflow: hidden
    }
-    #box1 {
+    .box1 {
     background: #aace28; /* Цвет фона */
     width: 500px; /* Ширина блока */
     padding: 10px; /* Поля */
     border: 2px solid #000; /* Параметры рамки */
     }
-    #box2 {
+    .box2 {
     background: rgb(42, 207, 212); /* Цвет фона */
     width: 500px; /* Ширина блока */
     padding: 10px; /* Поля */
@@ -50,23 +50,25 @@
 <button class="button-1" >Начать игру</button>
 <div>
 <p>Players - <span id ="players"></span></p>
-  <input type="text" name="" value="Введите ник" id="name"> <button type="submit" name="button" >Задать ник</button>
+<form class="" action="/munchkin_nick" method="post">
+  <input type="text" name="nick" value="Введите ник"> <button type="submit" name="button" >Задать ник</button>
+</form>
+
 </div>
 <!--PLAYERSBOX-->
 <div class ="Player tabs">
     <div>
-        <p><span id="box1"><span id="name1">Name1</span></span></p>
-        <p><span id="box2">PLAYER TAB</span></p><br>
+        <p><span class="box1"><span id="name1">Name1</span></span></p>
+        <p><span class="box2">PLAYER TAB</span></p><br>
     </div>
 
     <div>
-    <p><span id="box1">Name2</span></p>
-    <p><span id="box2">PLAYER TAB</span></p><br>
+    <p><span class="box1">Name2</span></p>
+    <p><span class="box2">PLAYER TAB</span></p><br>
     </div>
 
     <div>
-        <p><span id="box1">Name3</span></p>
-        <p><span id="box2">PLAYER TAB</span></p>
+        <p><span class="box1" id="player_name">Name3</span></p>
     </div>
 <!--END-->
 
@@ -92,6 +94,9 @@
 
       socket.on('players_in_room',function (players) {
         $('#players').text(players);
+      });
+      socket.on('set_nick', function (nick) {
+        $('#player_name').text(nick);
       });
       // });
       // function SetName() {

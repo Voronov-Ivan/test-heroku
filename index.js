@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var play = require('./play');
+play.printDoor();
 //
 app.use(express.urlencoded());
 app.use(express.json());
@@ -50,8 +52,8 @@ app.post("/munchkin_set_password", urlencodedParser, function (req, res) {
     password = req.body.pass;
     res.sendFile(__dirname + '/munchkin.html');
 });
-var players = []
-var password = ""
+var password = "";
+var players = [];
 io.on('connection', function(socket) {
     players.push(socket);
     console.log("Connected");
@@ -62,12 +64,21 @@ io.on('connection', function(socket) {
     players.splice(players.indexOf(socket),1);
     console.log("disconnected");
     io.emit('players_in_room',players.length);
-
     // socket.on('open_room',function (pass) {
     //   password = pass;
     // })
     // socket.on('send_name',function (name) {
     //   io.emit('set_name',name);
     // })
+    });
+    function Nick(nick) {
+      socket.emit('set_nick',nick);
+      play.pushNick(nick);
+      play.printPlayer();
+    }
+    app.post("/munchkin_nick", urlencodedParser, function (req, res) {
+        if(!req.body) return res.sendStatus(400);
+        Nick(req.body.nick);
+        console.log(req.body.nick);
     });
 });
