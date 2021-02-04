@@ -23,10 +23,14 @@ module.exports = {
       players.push(id);
       console.log(players.length);
     },
+    getName: function () {
+        return players;
+    },
     pushNick: function (nick,id) {
       players.forEach((item, i) => {
         if (id == item.id) {
           item.name = nick;
+          console.log(item.name);
         }
       });
     },

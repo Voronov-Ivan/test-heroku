@@ -53,11 +53,8 @@ app.post("/munchkin_set_password", urlencodedParser, function (req, res) {
 });
 var password = "";
 io.on('connection', function(socket) {
-    const id = socket.id;
     // const userId = await fetchUserId(socket);
     play.pushPlayer({type:'player',id : socket.id, level: 1,name:""});
-    play.printPlayer();
-
     //
     io.emit('players_in_room',players.length);
     socket.on('disconnect', function () {
@@ -65,13 +62,11 @@ io.on('connection', function(socket) {
     console.log("disconnected");
     io.emit('players_in_room',players.length);
     });
-    function Nick(nick,id) {
-      play.pushNick(nick,id);
-      io.emit('set_nick',nick);
+    socket.on('Send_nick_', function (nick) {
+      play.pushNick(nick,socket.id);
+      io.emit('set_nick', play.getName());
       play.printPlayer();
-    }
-    app.post("/munchkin_nick", urlencodedParser, function (req, res) {
-        if(!req.body) return res.sendStatus(400);
-        Nick(req.body.nick,id);
+      console.log("Send_nick complite");
+    })
     });
-});
+// });
