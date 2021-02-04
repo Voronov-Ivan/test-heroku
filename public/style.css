@@ -1,8 +1,8 @@
 body {
     background: url(img/фон\ для\ игры.jpg) no-repeat;
     background-size: 100%;
-    margin: 0; 
-    height: 100%; 
+    margin: 0;
+    height: 100%;
     overflow: hidden
    }
    #top {
@@ -14,22 +14,22 @@ body {
 vertical-align: middle;
 width: 250px;
 height:250px;
-margin-top: -70px;
-margin-left: -10px;
+/* margin-top: -70px; */
+/* margin-left: -10px; */
 }
     .avatar2 {
-vertical-align: middle;
+/* vertical-align: middle; */
 width: 300px;
 height:300px;
-margin-top: 550px;
-margin-left: 590px;
+/* margin-top: 550px; */
+/* margin-left: 590px; */
 }
     .avatar3 {
-vertical-align: middle;
+/* vertical-align: middle; */
 width: 250px;
 height:250px;
-margin-top: -70px;
-margin-left: 491px;
+/* margin-top: -70px; */
+/* margin-left: 491px; */
 
 }
 
