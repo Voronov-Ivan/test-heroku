@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
 app.post("/munchkin", urlencodedParser, function (req, res) {
   if (players.length == 0) {
     if(!req.body) return res.sendStatus(400);
-    res.sendFile(__dirname + '/munchkin.html');
+    res.sendFile(__dirname + '/munch-front.html');
   }
     else {
       console.log("Комната занята");
@@ -41,7 +41,7 @@ app.post("/munchkin", urlencodedParser, function (req, res) {
 app.post("/munchkin_start", urlencodedParser, function (req, res) {
   if (req.body.pris == password) {
     if(!req.body) return res.sendStatus(400);
-    res.sendFile(__dirname + '/munchkin.html');
+    res.sendFile(__dirname + '/munch-front.html');
   }
     else {
       console.log("Комната не создана");
@@ -49,12 +49,12 @@ app.post("/munchkin_start", urlencodedParser, function (req, res) {
 });
 app.post("/munchkin_set_password", urlencodedParser, function (req, res) {
     password = req.body.pass;
-    res.sendFile(__dirname + '/munchkin.html');
+    res.sendFile(__dirname + '/munch-front.html');
 });
 var password = "";
 io.on('connection', function(socket) {
     // const userId = await fetchUserId(socket);
-    play.pushPlayer({type:'player',id : socket.id, level: 1,name:""});
+    play.pushPlayer({type:'player',id : socket.id, level: 1,name:"",damage: 1,cardInHandDoor:[],cardInHandGold:[],cardInFront:[]});
     //
     io.emit('players_in_room',players.length);
     socket.on('disconnect', function () {
@@ -62,11 +62,36 @@ io.on('connection', function(socket) {
     console.log("disconnected");
     io.emit('players_in_room',players.length);
     });
-    socket.on('Send_nick_', function (nick) {
+    socket.on('Send_info', function (nick) {
       play.pushNick(nick,socket.id);
-      io.emit('set_nick', play.getName());
+      io.emit('set_info', play.getInfo());
       play.printPlayer();
       console.log("Send_nick complite");
     })
+
+    socket.on('up_lvl',function () {
+      play.UpLvl(socket.id);
+      io.emit('set_info', play.getInfo());
+    })
+    socket.on('up_damage',function () {
+      play.UpDamage(socket.id);
+      io.emit('set_info', play.getInfo());
+    })
+    socket.on('down_lvl',function () {
+      play.DownLvl(socket.id);
+      io.emit('set_info', play.getInfo());
+    })
+    socket.on('down_damage',function () {
+      play.DownDamage(socket.id);
+      io.emit('set_info', play.getInfo());
+    })
+
+    socket.on('get_door', function () {
+      play.getDoor(socket.id)
+      io.emit('set_info', play.getInfo());
     });
-// });
+    socket.on('get_gold', function () {
+      play.getGold(socket.id)
+      io.emit('set_info', play.getInfo());
+    });
+});

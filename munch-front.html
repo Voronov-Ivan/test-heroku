@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munchkin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<style>
+    body {
+    overflow: hidden;
+    background-image: url(public/img/фон.jpg);
+    background-size: 100%;
+   }
+   .d{
+     display: inline-block;
+   }
+   #CardInFront{
+     position: absolute;
+     right:  10px;
+     top: 410px;
+     border: 2px solid red;
+   }
+   #PLAYER_BOX{
+     background-size: 100%;
+     float: left;
+     border: 15px solid darkorange;
+  	/* padding: 150px; */
+  	 display: inline-block;
+   }
+   #PLAYER_BOX2{
+     float: left;
+    border: 15px solid darkorange;
+  	display: inline-block;
+   }
+
+   .door{
+   	margin-left: auto;
+   }
+   #rub{
+   	position: absolute;
+    right: 550px;
+    top: 80px;
+
+   }
+   .name_{
+     position: absolute;
+     right: 5px;
+     bottom: 5px;
+   }
+   .n1{
+     color: red;
+     font-size: 22px;
+     border: 4px solid black;
+   }
+   .table{
+     position: absolute;
+     right: 1%;
+     top: 1%;
+   	background-image: url(public/img/стол.jpg);
+   	background-size: 100%;
+   	border: 10px solid darkorange;
+   	padding: 150px;
+   	height: 80px;
+   	width: 200px;
+   	/* margin-left: 60%;
+   	margin-top: -40%; */
+   }
+   #stol{
+     position:absolute;
+     left:30px;
+     bottom: 1%
+   }
+
+</style>
+</head>
+<body>
+<h1 style="color: darkgoldenrod;" align = "center">Munchkin</h1>
+<button class="button-1" >Начать игру</button>
+<form action="/munchkin_set_password" method="post">
+  <input  placeholder="set password" name = pass>
+  <button type="submit" id="open_room">open room</button>
+</form>
+<div>
+  <p>Players - <span id ="players"></span></p>
+  <form  method="post" onsubmit="return false;">
+    <input type="text" name="nick" id="name_" placeholder="Введите ник"> <button type="submit" name="button" onclick="Send_nick($('#name_').val())" >Задать ник</button>
+  </form>
+</div>
+<!--PLAYERSBOX-->
+<div class ="Player tabs">
+    <div class="0__" class="n1">
+        <p><span ><span id="name0" class="n1"></span></span><br>
+        <span ><span id="lvl0" class="n1"></span></span><br>
+        <span ><span id="damage0" class="n1"></span></span></p>
+        <p><span >
+          <div class="card">
+            <div class="d" class="0_" align="left"></div>
+            <div class="d" class="1_" align="left"></div>
+            <div class="d" class="2_" align="left"></div>
+            <div class="d" class="3_" align="left"></div>
+            <div class="d" class="4_" align="left"></div>
+            <div class="d" class="5_" align="left"></div>
+            <div class="d" class="6_" align="left"></div>
+            <div class="d" class="7_" align="left"></div>
+            <div class="d" class="8_" align="left"></div>
+            <div class="d" class="9_" align="left"></div>
+          </div>
+        </span></p><br>
+    </div>
+
+    <div class="1__" class="n1">
+        <p><span ><span id="name1" class="n1"></span></span><br>
+        <span ><span id="lvl1" class="n1"></span></span><br>
+        <span ><span id="damage1" class="n1"></span></span></p>
+        <p><span >
+          <div class="card">
+            <div class="d" class="0_" align="left"></div>
+            <div class="d" class="1_" align="left"></div>
+            <div class="d" class="2_" align="left"></div>
+            <div class="d" class="3_" align="left"></div>
+            <div class="d" class="4_" align="left"></div>
+            <div class="d" class="5_" align="left"></div>
+            <div class="d" class="6_" align="left"></div>
+            <div class="d" class="7_" align="left"></div>
+            <div class="d" class="8_" align="left"></div>
+            <div class="d" class="9_" align="left"></div>
+          </div>
+        </span></p><br>
+    </div>
+
+    <div class="2__" class="n1">
+        <p><span ><span id="name2" class="n1"></span></span><br>
+        <span ><span id="lvl2" class="n1"></span></span><br>
+        <span ><span id="damage2" class="n1"></span></span></p>
+        <span >
+          <div class="card">
+            <div class="d" class="0_" align="left"></div>
+            <div class="d" class="1_" align="left"></div>
+            <div class="d" class="2_" align="left"></div>
+            <div class="d" class="3_" align="left"></div>
+            <div class="d" class="4_" align="left"></div>
+            <div class="d" class="5_" align="left"></div>
+            <div class="d" class="6_" align="left"></div>
+            <div class="d" class="7_" align="left"></div>
+            <div class="d" class="8_" align="left"></div>
+            <div class="d" class="9_" align="left"></div>
+          </div>
+        </span></p><br>
+    </div>
+
+<!--END-->
+
+</div>
+<div id="rub">
+  <img  onclick="GetGold()" src="public/gold/Сокровище.png" >
+  <img  onclick="GetDoor()" src="public/brown/Дверь.png" class="door">
+</div>
+    <!--MAIN_PLAYER-->
+    <div id="CardInFront" align="right">
+
+    </div>
+    <div align="left">
+        <div id="PLAYER_BOX" align="left">
+          <div class="d" id="0" align="left"></div>
+          <div class="d" id="1" align="left"></div>
+          <div class="d" id="2" align="left"></div>
+          <div class="d" id="3" align="left"></div>
+          <div class="d" id="4" align="left"></div>
+          <div class="d" id="5" align="left"></div>
+          <div class="d" id="6" align="left"></div>
+          <div class="d" id="7" align="left"></div>
+          <div class="d" id="8" align="left"></div>
+          <div class="d" id="9" align="left"></div>
+        </div>
+        <div id="PLAYER_BOX2">
+          <div class="d" id="0" align="left"></div>
+          <div class="d" id="1" align="left"></div>
+          <div class="d" id="2" align="left"></div>
+          <div class="d" id="3" align="left"></div>
+          <div class="d" id="4" align="left"></div>
+          <div class="d" id="5" align="left"></div>
+          <div class="d" id="6" align="left"></div>
+          <div class="d" id="7" align="left"></div>
+          <div class="d" id="8" align="left"></div>
+          <div class="d" id="9" align="left"></div>
+        </div>
+    </div>
+<div class="name_">
+  <div class="n1" id="player_name"></div>
+  <div class="n1"><span id="lvl"></span>
+    <button type="submit" onclick="UpLVL()">+1</button>
+    <button type="submit" onclick="DownLVL()">-1</button>
+  </div>
+  <div class="n1"><span id="damage"></span>
+    <button type="submit" onclick="UpDamage()">+1</button>
+    <button type="submit" onclick="DownDamage()">-1</button>
+  </div>
+</div>
+<div class="table"> <span id="stol" ></span> </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+<script>
+  var socket = io.connect('/');
+
+  socket.on('players_in_room',function (players) {
+    $('#players').text(players);
+  });
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  socket.on('set_info', function (pl) {
+    pl.forEach((item, i) => {
+      if (item.id == socket.id) {
+        $('#player_name').text(item.name);
+        $('#lvl').text("LVL : "+item.level);
+        $('#damage').text("Damage : "+item.damage);
+        $('#PLAYER_BOX img').remove();
+        if (item.cardInHandDoor.length > 0) {
+          item.cardInHandDoor.forEach((item, i) => {
+            var divID = '#PLAYER_BOX  #'+i;
+            $(divID).append('<img onclick=CardInFront($(this).attr("src"))>');
+            divID +=' img'
+            item = "public/brown/"+item;
+            $(divID).attr('src', item);
+          });
+        }
+        $('#PLAYER_BOX2 img').remove();
+        if (item.cardInHandGold.length > 0) {
+          item.cardInHandGold.forEach((item, i) => {
+            var divID = '#PLAYER_BOX2 #'+i;
+            $(divID).append('<img onclick=CardInFront($(this).attr("src"))>');
+            divID +=' img'
+            item = "public/gold/"+item;
+            $(divID).attr('src', item);
+          });
+        }
+      }
+      else {
+        var name = '#name'+(i);
+        $(name).text(item.name);
+        var lvl = '#lvl'+(i);
+        $(lvl).text("LVL : "+item.level);
+        var damage = '#damage'+(i);
+        $(damage).text("Damage : "+item.damage);
+        // if (item.cardInHand.length > 0) {
+        //   var hand = ".card img"
+        //   $(hand).remove();
+        //   console.log(item.cardInHand);
+        //   item.cardInHand.forEach((item, a) => {
+        //     hand = ' .card '+(a+"_");
+        //     $(hand).append('<img>');
+        //     hand +=' img'
+        //     item = "public/brown/"+item;
+        //     $(hand).attr('src', item);
+        //     console.log(item);
+        //   });
+        // }
+      }
+    });
+  });
+  /////////////////////////////////////////////////////////////////
+  function Send_nick(nick) {
+    socket.emit('Send_info',nick);
+    console.log(nick);
+  }
+  function GetDoor() {
+    socket.emit('get_door')
+  }
+  function GetGold() {
+    socket.emit('get_gold')
+  }
+
+  function UpLVL() {
+    socket.emit('up_lvl')
+  }
+  function UpDamage() {
+    socket.emit('up_damage')
+  }
+function DownLVL() {
+  socket.emit('down_lvl')
+}
+function DownDamage() {
+  socket.emit('down_damage')
+}
+function CardInFront(s) {
+  var a = "<img src='"+s+"' onclick='$(this).remove()'>"
+  console.log(a);
+  $('#CardInFront').append(a);
+}
+
+</script>
+</body>
+</html>
