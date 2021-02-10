@@ -5,10 +5,10 @@ var fight = [];
 var kub = [1,2,3,4,5,6]
 var start = false;
 for (var i = 1; i <= 73; i++) {
-  door.push(i + ".png")
+  door.push(i + ".jpg")
 }
 for (var i = 1; i <= 75; i++) {
-  gold.push(i + ".png")
+  gold.push(i + ".jpg")
 }
 shuffle(door);
 shuffle(gold);

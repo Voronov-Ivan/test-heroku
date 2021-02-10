@@ -64,9 +64,11 @@ socket.on('set_info', function (pl) {
         var card = "#card"+index+" img";
         $(card).remove();
         item.cardInFront.forEach((item, a) => {
-          var divID = "#card"+index+" #"+a;
+          var divID = "#card"+index;
+          console.log(item);
           var img = "<img onclick=CardInFront($(this).attr('src')) src='"+item+"'>"
           $(divID).append(img);
+          console.log(img);
         });
       }
       index++;
