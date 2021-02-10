@@ -7,7 +7,7 @@ var start = false;
 for (var i = 1; i <= 73; i++) {
   door.push(i + ".png")
 }
-for (var i = 1; i <= 74; i++) {
+for (var i = 1; i <= 75; i++) {
   gold.push(i + ".png")
 }
 shuffle(door);
