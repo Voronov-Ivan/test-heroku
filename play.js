@@ -3,21 +3,26 @@ var gold = [];
 players = [];
 var fightdoor = [];
 var fightgold = [];
+var del = []
 var kub = [1,2,3,4,5,6]
 var start = false;
 module.exports = {
     //Експортовані модулі
     setKolod:function () {
-      for (var i = 1; i <= 73; i++) {
+      door = []
+      gold = []
+      fightdoor = []
+      fightgold = []
+      del = []
+      for (var i = 1; i <= 92; i++) {
         door.push(i + ".jpg")
       }
-      for (var i = 1; i <= 75; i++) {
+      for (var i = 1; i <= 77; i++) {
         gold.push(i + ".jpg")
       }
       shuffle(door);
       shuffle(gold);
-      fightdoor = []
-      fightgold = []
+
     },
     pushPlayer: function (object) {
       players.push(object);
@@ -74,10 +79,12 @@ module.exports = {
     },
     delDoorFigth:function (src) {
       fightdoor.splice(fightdoor.indexOf(src),1)
+      del.push("public/brown/"+src);
       return fightdoor;
     },
     delGoldFigth:function (src) {
       fightgold.splice(fightgold.indexOf(src),1)
+      del.push("public/gold/"+src);
       return fightgold;
     },
     TakeDoorFigth:function (src, id) {
@@ -110,6 +117,25 @@ module.exports = {
         }
       });
     },
+    FrontToDoor:function (src, id) {
+      players.forEach((item, i) => {
+        if (id == item.id) {
+          item.cardInFront.splice(item.cardInFront.indexOf("public/brown/"+src),1);
+          item.cardInHandDoor.push(src);
+        }
+      });
+    },
+    FrontToGold:function (src, id) {
+      players.forEach((item, i) => {
+        if (id == item.id) {
+          console.log("norm0");
+          item.cardInFront.splice(item.cardInFront.indexOf("public/gold/"+src),1);
+          console.log("norm1");
+          item.cardInHandGold.push(src);
+          console.log("norm2");
+        }
+      });
+    },
     getFigthDoor:function () {
       return fightdoor;
     },
@@ -137,14 +163,14 @@ module.exports = {
           console.log("Zashlo");
           if (src.slice(0,12)=="public/gold/") {
             var index =item.cardInFront.indexOf(src)
+            del.push(src);
             item.cardInFront.splice(index,1)
-            console.log(item);
           }
 
           else if(src.slice(0,13)=="public/brown/"){
             var index =item.cardInFront.indexOf(src)
+            del.push(src);
             item.cardInFront.splice(index,1)
-            console.log(index);
           }
         }
       })
@@ -194,6 +220,19 @@ module.exports = {
         console.log(item);
       })
     },
+    DelToFight:function (src,id) {
+          if (src.slice(0,12)=="public/gold/") {
+          del.splice(del.indexOf(src),1)
+          fightgold.push(src.replace("public/gold/",""))
+          }
+          else if(src.slice(0,13)=="public/brown/"){
+            del.splice(del.indexOf(src),1)
+            fightdoor.push(src.replace("public/brown/",""))
+      }
+    },
+    getDel:function () {
+      return del;
+    }
   }
   function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
