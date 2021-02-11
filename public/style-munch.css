@@ -1,0 +1,94 @@
+body {
+    /* overflow: hidden; */
+    background-image: url(img/fon.jpg);
+    background-size: 100%;
+   }
+   #card0  img{
+     width: 100px;
+   }
+   #card1  img{
+     width: 100px;
+   }
+   #card2  img{
+     width: 100px;
+   }
+   #CardInFront{
+     position: relative;
+     right:  10px;
+     top: 0;
+     /* border: 2px solid red; */
+   }
+   #PLAYER_BOX{
+     background-size: 100%;
+     float: left;
+     /* border: 15px solid darkorange; */
+  	/* padding: 150px; */
+  	 display: inline-block;
+   }
+   #PLAYER_BOX2{
+     float: left;
+    /* border: 15px solid darkorange; */
+  	display: inline-block;
+   }
+
+   #rub{
+     display: inline-block;
+     margin-left: auto;
+   	position: absolute;
+    right: 550px;
+    top: 80px;
+
+   }
+   #rub img{
+     width: 100px;
+   }
+   .name_{
+     position: absolute;
+     right: 5px;
+     top: 5px;
+   }
+   .n1{
+     color: red;
+     font-size: 22px;
+     border: 4px solid black;
+   }
+
+   #fight{
+     position: absolute;
+     display: inline-block;
+     top: 240px;
+     right: 5px;
+   }
+   #fight img{
+     width: 150px;
+   }
+
+   .holder{
+     display: inline-block;
+      position:relative;
+      }
+    .block{
+      position:relative;
+      bottom: 200px;
+      display:none;
+      }
+    .holder:hover .block{
+      display:block;
+      }
+
+      #rub .holder{
+        display: inline-block;
+         position:relative;
+         }
+       #rub .block{
+         position:relative;
+         bottom: 180px;
+         display:none;
+         }
+       #rub .holder:hover .block{
+         display:block;
+         }
+
+    .playertabs{
+      width: 30%;
+    }
